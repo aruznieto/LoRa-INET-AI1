@@ -3,7 +3,7 @@ package inet.simulations;
 import inet.applications.udpapp.UDPBasicApp;
 import inet.node.inet.Router;
 import inet.node.internetcloud.InternetCloud;
-import inet.LoRaPhy.LoRaMedium;
+import inet.LoRaPhy.OpalLoRaRadioMedium;
 import inet.LoraNode.LoRaNode;
 import inet.LoraNode.LoRaGW;
 import inet.node.inet.StandardHost;
@@ -26,7 +26,7 @@ network LoRaNetworkTest
         loRaGW[numberOfGateways]: LoRaGW {
             @display("p=83.664,150.192;is=s");
         }
-        LoRaMedium: LoRaMedium {
+        OpalLoRaRadioMedium: OpalLoRaRadioMedium {
             @display("p=167.328,88.704");
         }
         networkServer: StandardHost {

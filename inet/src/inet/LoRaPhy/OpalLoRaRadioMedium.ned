@@ -21,7 +21,7 @@ package inet.LoRaPhy;
 module OpalLoRaRadioMedium extends LoRaMedium
 {
     parameters:
-        @class(OpalLoRaRadioMedium);
+        @class(physicallayer::OpalLoRaRadioMedium);
         
         double carrierFrequency @unit(Hz) = default(5.9GHz);
         int azimuthDelta = default(1);
