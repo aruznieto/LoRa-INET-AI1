@@ -21,6 +21,6 @@ package inet.LoRaPhy;
 module OpalLoRaAnalogModel extends LoRaAnalogModel
 {
         parameters:
-        @class(OpalLoRaAnalogModel);
+        @class(physicallayer::OpalLoRaAnalogModel);
         
 }

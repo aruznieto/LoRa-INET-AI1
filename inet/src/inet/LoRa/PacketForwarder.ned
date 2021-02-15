@@ -20,7 +20,7 @@ import inet.applications.contract.IUDPApp;
 
 simple PacketForwarder like IUDPApp
 {
-    @class(inet::PacketForwarder);
+    @class(PacketForwarder);
     @signal[LoRa_GWPacketReceived](type=long); // optional
     @statistic[LoRa_GWPacketReceived](source=LoRa_GWPacketReceived; record=count);
     int localPort = default(-1);  // local port (-1: use ephemeral port)

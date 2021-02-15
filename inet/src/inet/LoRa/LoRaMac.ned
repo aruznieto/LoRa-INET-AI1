@@ -23,7 +23,7 @@ simple LoRaMac extends CsmaCaMac
 {
     parameters:
         bitrate = 250bps;
-        @class(inet::LoRaMac);
+        @class(LoRaMac);
         gates:
         	input upperMgmtIn;
         	output upperMgmtOut;
