@@ -78,7 +78,7 @@ void LoRaMedium::initialize(int stage)
         propagation = check_and_cast<IPropagation *>(getSubmodule("propagation"));
         pathLoss = check_and_cast<IPathLoss *>(getSubmodule("pathLoss"));
         obstacleLoss = dynamic_cast<IObstacleLoss *>(getSubmodule("obstacleLoss"));
-        analogModel = check_and_cast<IAnalogModel *>(getSubmodule("OpalLoRaAnalogModel"));
+        analogModel = check_and_cast<IAnalogModel *>(getSubmodule("analogModel"));
         backgroundNoise = dynamic_cast<IBackgroundNoise *>(getSubmodule("backgroundNoise"));
         mediumLimitCache = check_and_cast<IMediumLimitCache *>(getSubmodule("mediumLimitCache"));
         neighborCache = dynamic_cast<INeighborCache *>(getSubmodule("neighborCache"));
@@ -146,7 +146,7 @@ std::ostream& LoRaMedium::printToStream(std::ostream &stream, int level) const
     if (level <= PRINT_LEVEL_TRACE) {
         stream << ", propagation = " << printObjectToString(propagation, level + 1)
                << ", pathLoss = " << printObjectToString(pathLoss, level + 1)
-               << ", analogModel = " << printObjectToString(analogModel, level + 1)
+               << ", OpalLoRaAnalogModel = " << printObjectToString(analogModel, level + 1)
                << ", obstacleLoss = " << printObjectToString(obstacleLoss, level + 1)
                << ", backgroundNoise = " << printObjectToString(backgroundNoise, level + 1)
                << ", mediumLimitCache = " << printObjectToString(mediumLimitCache, level + 1)

@@ -380,7 +380,7 @@ namespace inet::physicallayer {
                 }
                 ++i;
             }
-        } catch (std::out_of_range e) {
+        } catch (std::out_of_range &e) {
             throw cRuntimeError("Radio is not registered with opal");
             return;
         }
@@ -456,7 +456,7 @@ namespace inet::physicallayer {
         int id;
         try  {
             id=receiversRadios.at(radio)->opalReceiverId;
-        } catch (std::out_of_range e) {
+        } catch (std::out_of_range &e) {
             std::stringstream s;
             s<<"transmitInOpal():: radio "<<radio<<" is not registered with opal";
             throw cRuntimeError(s.str().c_str());
@@ -503,7 +503,7 @@ namespace inet::physicallayer {
             try  {
                 callback=receiversRadios.at(receiver);
 
-            } catch (std::out_of_range e) {
+            } catch (std::out_of_range &e) {
                 std::stringstream s;
                 s<<"sendToRadio():: radio "<<receiver<<" is not registered with opal";
                 throw cRuntimeError(s.str().c_str());
@@ -533,7 +533,7 @@ namespace inet::physicallayer {
         try  {
             ocb=receiversRadios.at(receiver);
 
-        } catch (std::out_of_range e) {
+        } catch (std::out_of_range &e) {
             std::stringstream s;
             s<<"computeReception():: radio "<<receiver<<" is not registered with opal";
             throw cRuntimeError(s.str().c_str());
@@ -548,7 +548,7 @@ namespace inet::physicallayer {
             s<<"computeReception():: transmitter is  null. Receiver="<<ocb->opalReceiverId;
             try{
                 txId=pendingTransmissions.at(transmission->getId());
-            } catch (std::out_of_range e) {
+            } catch (std::out_of_range &e) {
                 std::stringstream s;
                 s<<"computeReception():: pending transmission "<<transmission->getId()<<" not found";
                 throw cRuntimeError(s.str().c_str());
@@ -560,7 +560,7 @@ namespace inet::physicallayer {
             try  {
                 txId=receiversRadios.at(transmission->getTransmitter())->opalReceiverId;
 
-            } catch (std::out_of_range e) {
+            } catch (std::out_of_range &e) {
                 std::stringstream s;
                 if (transmission->getTransmitter()==nullptr) {
                     std::cout<<"computeReception():: out of range transmitter is  null";
@@ -621,8 +621,7 @@ namespace inet::physicallayer {
         std::cout<<"Opal Initialized"<<endl;
     }
 
-    void OpalLoRaRadioMedium::receiveSignal(cComponent* source, simsignal_t signal,
-            cObject* value, cObject* details) {
+    void OpalLoRaRadioMedium::receiveSignal(cComponent* source, simsignal_t signal, cObject* value, cObject* details) {
         if (signal==mobilityStateChangedSignal) {
             MobilityBase* mob=check_and_cast<MobilityBase*>(value);
             int id=mob->getParentModule()->par("id").intValue();
