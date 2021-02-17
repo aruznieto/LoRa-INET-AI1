@@ -4,8 +4,8 @@ import inet.applications.udpapp.UDPBasicApp;
 import inet.node.inet.Router;
 import inet.node.internetcloud.InternetCloud;
 import inet.LoRaPhy.OpalLoRaRadioMedium;
-import inet.LoraNode.LoRaNode;
-import inet.LoraNode.LoRaGW;
+import inet.LoraNode.OpalLoRaNode;
+import inet.LoraNode.OpalLoRaGW;
 import inet.node.inet.StandardHost;
 import inet.networklayer.configurator.ipv4.IPv4NetworkConfigurator;
 import inet.node.ethernet.Eth1G;
@@ -20,10 +20,10 @@ network LoRaNetworkTest
         int networkSizeY = default(500);
         @display("bgb=355.824,356.832");
     submodules:
-        loRaNodes[numberOfNodes]: LoRaNode {
+        loRaNodes[numberOfNodes]: OpalLoRaNode {
             @display("p=83.664,233.856");
         }
-        loRaGW[numberOfGateways]: LoRaGW {
+        loRaGW[numberOfGateways]: OpalLoRaGW {
             @display("p=83.664,150.192;is=s");
         }
         OpalLoRaRadioMedium: OpalLoRaRadioMedium {

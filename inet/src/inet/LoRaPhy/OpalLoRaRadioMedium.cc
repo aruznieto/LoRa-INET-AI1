@@ -130,9 +130,9 @@ namespace inet::physicallayer {
             }
             //Print configuration
 
-            std::cout<<"RadioMedium configuration:"<<getCompleteStringRepresentation()<<std::endl;
-            std::cout<< check_and_cast<inet::physicallayer::IPrintableObject*>(getModuleByPath(".backgroundNoise"))->getCompleteStringRepresentation()<<std::endl;
-            std::cout<< check_and_cast<inet::physicallayer::IPrintableObject*>(getModuleByPath(".mediumLimitCache"))->getCompleteStringRepresentation()<<std::endl;
+            //std::cout<<"RadioMedium configuration:"<<getCompleteStringRepresentation()<<std::endl;
+            //std::cout<< check_and_cast<inet::physicallayer::IPrintableObject*>(getModuleByPath(".backgroundNoise"))->getCompleteStringRepresentation()<<std::endl;
+            //std::cout<< check_and_cast<inet::physicallayer::IPrintableObject*>(getModuleByPath(".mediumLimitCache"))->getCompleteStringRepresentation()<<std::endl;
         }
     }
 
@@ -624,7 +624,8 @@ namespace inet::physicallayer {
     void OpalLoRaRadioMedium::receiveSignal(cComponent* source, simsignal_t signal, cObject* value, cObject* details) {
         if (signal==mobilityStateChangedSignal) {
             MobilityBase* mob=check_and_cast<MobilityBase*>(value);
-            int id=mob->getParentModule()->par("id").intValue();
+            //int id=mob->getParentModule()->par("id").intValue();
+            int id=mob->getParentModule()->getId();
             for (std::map<const IRadio*, OpalReceiverCallback*>::iterator it=receiversRadios.begin(); it!=receiversRadios.end(); ++it) {
                 if (it->second->opalReceiverId==id) {
                     Coord p=mob->getCurrentPosition();
