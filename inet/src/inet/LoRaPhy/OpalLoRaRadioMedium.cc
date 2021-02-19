@@ -124,10 +124,10 @@ namespace inet::physicallayer {
             //else static meshes will be loaded by Veneris server or any other framework
         }
         if (stage== INITSTAGE_LAST ) {
-            if (loadFromFiles) {
+            //if (loadFromFiles) {
                 //if we have read the static meshes from files we can end it now, otherwise, let the server or framework call it when available.
                 finishOpalContext();
-            }
+            //}
             //Print configuration
 
             //std::cout<<"RadioMedium configuration:"<<getCompleteStringRepresentation()<<std::endl;
