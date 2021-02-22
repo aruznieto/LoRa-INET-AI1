@@ -39,6 +39,7 @@ protected:
     virtual void initialize(int stage);
     virtual W computeReceptionPower(const IRadio *radio, const ITransmission *transmission, const IArrival *arrival) const override;
     OpalLoRaRadioMedium *analogModel;
+    virtual int numInitStages() const override { return NUM_INIT_STAGES; }
 };
 
 
