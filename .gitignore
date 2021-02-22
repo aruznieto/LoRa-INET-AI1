@@ -1,4 +1,6 @@
 /.metadata/
+/inet/simulations/core
+
  Prerequisites
 *.d
 
