@@ -1,7 +1,7 @@
 # Flora, INET, OPAL en el mismo proyecto
 ## VERSIONES
 * OMNET++ 5.6
-* INET 3.6.8
+* INET 3.6.8 ([Descargar](https://github.com/inet-framework/inet/releases/download/v3.6.8/inet-3.6.8-src.tgz))
 * FLORA 0.8  ([Descargar](https://github.com/mariuszslabicki/flora))
 
 ## PATHS & SYMBOLS
