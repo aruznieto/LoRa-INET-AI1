@@ -1,20 +1,20 @@
 # Flora, INET, OPAL en el mismo proyecto
 ## VERSIONES
-* OMNET++ 5.6 ([Descargar](https://github.com/omnetpp/omnetpp/releases/download/omnetpp-5.6/omnetpp-5.6-src-linux.tgz))
-* INET 3.6.8 ([Descargar](https://drive.google.com/file/d/1Y3piMtrX1nV4aT_69csTkULYM_kxUyQm/view?usp=sharing))
-* FLORA 0.8  ([Descargar](https://drive.google.com/file/d/19bO7VG52wIU02MZ07ztqdHwCintY4AEb/view?usp=sharing))
+* **OMNET++ 5.6** ([Descargar](https://github.com/omnetpp/omnetpp/releases/download/omnetpp-5.6/omnetpp-5.6-src-linux.tgz))
+* **INET 3.6.8** ([Descargar](https://drive.google.com/file/d/1Y3piMtrX1nV4aT_69csTkULYM_kxUyQm/view?usp=sharing))
+* **FLORA 0.8**  ([Descargar](https://drive.google.com/file/d/19bO7VG52wIU02MZ07ztqdHwCintY4AEb/view?usp=sharing))
 
 ## PATHS & SYMBOLS
-Recuerda cambiar los PATHS a los de tu ordenador.
-* LIBRARY PATHS:
+_Recuerda cambiar los PATHS a los de tu ordenador._
+* **LIBRARY PATHS:**
 	* /home/anrunie/optix/NVIDIA-OptiX-SDK-6.5.0-linux64/lib64
 	* /home/anrunie/optix/NVIDIA-OptiX-SDK-6.5.0-linux64/SDK/lib
 	* /usr/local/cuda-10.2/lib64
-* INCLUDES:
+* **INCLUDES:**
 	* /home/anrunie/optix/NVIDIA-OptiX-SDK-6.5.0-linux64/include
 	* /home/anrunie/optix/NVIDIA-OptiX-SDK-6.5.0-linux64/SDK/opal
 	* /usr/local/cuda-10.2/include
-* LIBRARIES:
+* **LIBRARIES:**
 	* /usr/lib/x86_64-linux-gnu/libboost_system.so
 	* /home/anrunie/optix/NVIDIA-OptiX-SDK-6.5.0-linux64/lib64/liboptix.so
 	* /home/anrunie/optix/NVIDIA-OptiX-SDK-6.5.0-linux64/lib64/liboptixu.so
@@ -22,11 +22,11 @@ Recuerda cambiar los PATHS a los de tu ordenador.
 	* /usr/local/cuda-10.2/lib64/libcudart.so
 
 ## MAKEMAKE OPTIONS
-* COMPILE
+* **COMPILE:**
 	* /home/anrunie/optix/NVIDIA-OptiX-SDK-6.5.0-linux64/include
 	* /home/anrunie/optix/NVIDIA-OptiX-SDK-6.5.0-linux64/SDK/opal
 	* /usr/local/cuda-10.2/include 
-* LINK
+* **LINK:** (esto se escribe así directamente)
 	* opal_s
 	* boost_system 
 
