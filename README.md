@@ -2,7 +2,7 @@
 ## VERSIONES
 * OMNET++ 5.6
 * INET 3.6.8
-* FLORA 0.8 : [https://github.com/mariuszslabicki/flora](https://github.com/mariuszslabicki/flora)
+* FLORA 0.8  ([Descargar](https://github.com/mariuszslabicki/flora))
 
 ## PATHS & SYMBOLS
 Recuerda cambiar los PATHS a los de tu ordenador.
