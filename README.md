@@ -35,5 +35,6 @@ _Recuerda cambiar los PATHS a los de tu ordenador._
 * Se copia la carpeta **simulations** en **inet/**
 * En todos los .ned de FloRa, se ha cambiado el **@class** eliminando la parte que hacía referencia a inet, por ejemplo: **@class(inet::SimpleLoRaApp) ahora es @class(SimpleLoRaApp)**
 * Se han creado 2 .ned ([**OpalLoRaNode**](https://github.com/aruznieto/LoRa-INET-AI1/blob/master/inet/src/inet/LoraNode/OpalLoRaNode.ned) y [**OpalLoRaGW**](https://github.com/aruznieto/LoRa-INET-AI1/blob/master/inet/src/inet/LoraNode/OpalLoRaGW.ned), ambos como módulos compuesto) para añadir 2 parametros que necesita Opal para realizar los cálculos
-* En [LoRaPhy](https://github.com/aruznieto/LoRa-INET-AI1/tree/master/inet/src/inet/LoRaPhy) se crea **OpalLoRaAnalogModel** y **OpalLoRaRadioMedium** (ambos como módulos simples)
+* En el [package.ned](https://github.com/aruznieto/LoRa-INET-AI1/blob/master/inet/simulations/package.ned) que lanza la simulación de LoRa se tiene que cambiar LoRaNode y LoRaGW por los módulos que se han creado en el punto anterior.
+* En [LoRaPhy](https://github.com/aruznieto/LoRa-INET-AI1/tree/master/inet/src/inet/LoRaPhy) se crea **OpalLoRaAnalogModel** y **OpalLoRaRadioMedium** (ambos como módulos simples), estos contendrán todas las funciones necesarias para realizar los calculos que realiza FloRa con OPAL
 * En [LoRaMedium.ned](https://github.com/aruznieto/LoRa-INET-AI1/blob/master/inet/src/inet/LoRaPhy/LoRaMedium.ned) se cambia el default de **analogModelType** por **OpalLoRaAnalogModel**
