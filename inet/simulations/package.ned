@@ -16,9 +16,9 @@ network LoRaNetworkTest
     parameters:
         int numberOfNodes = default(1);
         int numberOfGateways = default(1);
-        int networkSizeX = default(500);
-        int networkSizeY = default(500);
-        @display("bgb=355.824,356.832");
+        int networkSizeX = default(1000);
+        int networkSizeY = default(1000);
+        @display("bgb=1000,1000");
     submodules:
         loRaNodes[numberOfNodes]: OpalLoRaNode {
             @display("p=83.664,233.856");
@@ -27,25 +27,25 @@ network LoRaNetworkTest
             @display("p=83.664,150.192;is=s");
         }
         OpalLoRaRadioMedium: OpalLoRaRadioMedium {
-            @display("p=167.328,88.704");
+            @display("p=791,93");
         }
         networkServer: StandardHost {
             parameters:
-                @display("p=208.24002,27.216002");
+                @display("p=618,27");
         }
         configurator: IPv4NetworkConfigurator {
             parameters:
                 assignDisjunctSubnetAddresses = false;
-                @display("p=207.64801,88.704");
+                @display("p=792,27");
         }
         internetCloud: InternetCloud {
-            @display("p=83.664,27.216002");
+            @display("p=362,27");
         }
         gwRouter[numberOfGateways]: Router {
-            @display("p=24.192001,27.216002");
+            @display("p=268,27");
         }
         nsRouter: Router {
-            @display("p=138.09601,27.216002");
+            @display("p=499,27");
         }
     connections:
         networkServer.ethg++ <--> Eth1G <--> nsRouter.ethg++;
