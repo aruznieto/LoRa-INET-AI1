@@ -39,6 +39,6 @@ _Recuerda cambiar los PATHS a los de tu ordenador._
 * En [LoRaPhy](https://github.com/aruznieto/LoRa-INET-AI1/tree/master/inet/src/inet/LoRaPhy) se crea **OpalLoRaAnalogModel** y **OpalLoRaRadioMedium** (ambos como módulos simples), estos contendrán todas las funciones necesarias para realizar los calculos que realiza FloRa con OPAL
 * En [LoRaMedium.ned](https://github.com/aruznieto/LoRa-INET-AI1/blob/master/inet/src/inet/LoRaPhy/LoRaMedium.ned) se cambia el default de **analogModelType** por **OpalLoRaAnalogModel**
 
-## CALCULOS DE COMPROBACIÓN
+## CÁLCULOS DE COMPROBACIÓN
 
 ![IMAGEN](https://i.imgur.com/lwvqTEi.png)
