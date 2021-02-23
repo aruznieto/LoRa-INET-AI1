@@ -41,4 +41,4 @@ _Recuerda cambiar los PATHS a los de tu ordenador._
 
 ## CALCULOS DE COMPROBACIÓN
 
-[](https://i.imgur.com/lwvqTEi.png)
+![IMAGEN](https://i.imgur.com/lwvqTEi.png)
