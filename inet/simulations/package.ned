@@ -22,9 +22,11 @@ network LoRaNetworkTest
     submodules:
         loRaNodes[numberOfNodes]: OpalLoRaNode {
             @display("p=83.664,233.856");
+            id = index;
         }
         loRaGW[numberOfGateways]: OpalLoRaGW {
             @display("p=83.664,150.192;is=s");
+            id = index;
         }
         OpalLoRaRadioMedium: OpalLoRaRadioMedium {
             @display("p=791,93");
