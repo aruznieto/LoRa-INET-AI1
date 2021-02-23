@@ -124,10 +124,10 @@ namespace inet::physicallayer {
             //else static meshes will be loaded by Veneris server or any other framework
         }
         if (stage== INITSTAGE_LAST ) {
-            //if (loadFromFiles) {
+            if (loadFromFiles) {
                 //if we have read the static meshes from files we can end it now, otherwise, let the server or framework call it when available.
                 finishOpalContext();
-            //}
+            }
             //Print configuration
 
             //std::cout<<"RadioMedium configuration:"<<getCompleteStringRepresentation()<<std::endl;
@@ -624,8 +624,8 @@ namespace inet::physicallayer {
     void OpalLoRaRadioMedium::receiveSignal(cComponent* source, simsignal_t signal, cObject* value, cObject* details) {
         if (signal==mobilityStateChangedSignal) {
             MobilityBase* mob=check_and_cast<MobilityBase*>(value);
-            //int id=mob->getParentModule()->par("id").intValue();
-            int id=mob->getParentModule()->getId();
+            int id=mob->getParentModule()->par("id").intValue();
+            //int id=mob->getParentModule()->getId();
             for (std::map<const IRadio*, OpalReceiverCallback*>::iterator it=receiversRadios.begin(); it!=receiversRadios.end(); ++it) {
                 if (it->second->opalReceiverId==id) {
                     Coord p=mob->getCurrentPosition();
