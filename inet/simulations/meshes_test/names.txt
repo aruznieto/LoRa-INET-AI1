@@ -1,5 +1,5 @@
-Cube-NE
-Cube-NW
-Cube-SE
-Cube-SW
-LargePlane
+Cube-NEn
+Cube-NWn
+Cube-SEn
+Cube-SWn
+LargePlanen
