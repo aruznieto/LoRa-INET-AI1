@@ -16,17 +16,17 @@ network LoRaNetworkOpalTest
     parameters:
         int numberOfNodes = default(1);
         int numberOfGateways = default(1);
-        int networkSizeX = default(1000);
-        int networkSizeY = default(1000);
-        @display("bgb=1000,1000");
+        int networkSizeX = default(3000);
+        int networkSizeY = default(3000);
+        @display("bgb=3000,3000");
     submodules:
         loRaNodes[numberOfNodes]: OpalLoRaNode {
             @display("p=83.664,233.856");
-            id = 0;
+            id = index;
         }
         loRaGW[numberOfGateways]: OpalLoRaGW {
             @display("p=83.664,150.192;is=s");
-            id = 1;
+            id = numberOfNodes+1+index;
         }
         OpalLoRaRadioMedium: OpalLoRaRadioMedium {
             @display("p=791,93");
