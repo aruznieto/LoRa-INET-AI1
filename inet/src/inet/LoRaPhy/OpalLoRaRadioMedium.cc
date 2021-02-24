@@ -124,10 +124,10 @@ namespace inet::physicallayer {
             //else static meshes will be loaded by Veneris server or any other framework
         }
         if (stage== INITSTAGE_LAST ) {
-            if (loadFromFiles) {
+            //if (loadFromFiles) {
                 //if we have read the static meshes from files we can end it now, otherwise, let the server or framework call it when available.
                 finishOpalContext();
-            }
+            //}
             //Print configuration
 
             //std::cout<<"RadioMedium configuration:"<<getCompleteStringRepresentation()<<std::endl;
@@ -158,10 +158,9 @@ namespace inet::physicallayer {
                     std::istream_iterator<std::string>());
         } else {
             //Read meshes names from file with list
+
             std::ifstream infile(meshesFileList);
-
             std::string line;
-
 
             while (std::getline(infile, line)) {
                 results.push_back(line);
@@ -169,6 +168,7 @@ namespace inet::physicallayer {
             infile.close();
         }
         //std::string meshesNames = par("meshes");
+        //std::cout<<"path="<<path<<" meshesNames="<<meshesNames<<endl;
         EV_DEBUG<<"path="<<path<<"meshesNames="<<meshesNames<<endl;
         //std::istringstream iss(meshesNames);
         //std::vector<std::string> results(std::istream_iterator<std::string>{iss}, std::istream_iterator<std::string>());
@@ -179,6 +179,7 @@ namespace inet::physicallayer {
             std::ostringstream tf;
             std::ostringstream emf;
 
+            n = n.substr(0, n.size()-1);
 
             EV_DEBUG<<"Loading mesh from "<<n<<endl;
             //Assume all files use the same suffixes
@@ -186,6 +187,7 @@ namespace inet::physicallayer {
             inf<<path<<"/"<<n<<"-i.txt";
             tf<<path<<"/"<<n<<"-t.txt";
             emf<<path<<"/"<<n<<"-em.txt";
+            //std::cout<<path<<"/"<<n<<"-prueba.txt"<<endl;
             std::vector<optix::float3> v=loadVerticesFromFile(vf.str().c_str());
             std::vector<int> ind=loadTrianglesFromFile(inf.str().c_str());
             optix::Matrix4x4 tm=loadTransformFromFile(tf.str().c_str());
