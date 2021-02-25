@@ -39,6 +39,22 @@ _Recuerda cambiar los PATHS a los de tu ordenador._
 * En [LoRaPhy](https://github.com/aruznieto/LoRa-INET-AI1/tree/master/inet/src/inet/LoRaPhy) se crea **OpalLoRaAnalogModel** y **OpalLoRaRadioMedium** (ambos como módulos simples), estos contendrán todas las funciones necesarias para realizar los calculos que realiza FloRa con OPAL
 * En [LoRaMedium.ned](https://github.com/aruznieto/LoRa-INET-AI1/blob/master/inet/src/inet/LoRaPhy/LoRaMedium.ned) se cambia el default de **analogModelType** por **OpalLoRaAnalogModel**
 
-## CÁLCULOS DE COMPROBACIÓN
+## CÁLCULOS Y PRUEBAS PARA LA COMPROBACIÓN DEL FUNCIONAMIENTO
+
+Cálculos usando la Fórmula de Friis para comprobar la potencia recibida con un rayo
 
 ![IMAGEN](https://i.imgur.com/lwvqTEi.png)
+
+Comprobación TwoRayInterference con Meshes en escenario Chicago. Nodo y GW se han colocado en el hueco de un edificio, para favorecer los rebotes
+
+![EDIFICIO](https://i.imgur.com/zXfSxRd.png)
+
+![CHICAGO+MESHES](https://i.imgur.com/fof3s9O.png)
+
+Comprobación FreeSpaceLoss sin Meshes
+
+![SINMESHES](https://i.imgur.com/G8so0zV.png)
+
+## ¿CÓMO CONVERTIR ARCHIVOS MESH PARA QUE LOS LEA EL PROGRAMA CORRECTAMENTE? [Generar escenario](http://pcacribia.upct.es/veneris/tutorial)
+* Una vez generado el escenario en Unity (marcando las opciones de Opal), se pulsa sobre Opal > Save Static Meshes to Current Folder. Una vez hecho esto, se habrá creado una carpeta meshes en la raiz del proyecto de Unity. Esta carpeta contiene los meshes de todo el escenario así como otro archivo llamado "names.txt" que será el que leerá Omnet
+* Copiamos el archivo "convertir.sh" dentro de la carpeta meshes y lo ejecutamos. Esto sirve para quitar los espacios de los nombres de los archivos de forma automática. Una vez hecho esto Omnet ya leerá correctamente los meshes.
