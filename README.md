@@ -1,4 +1,4 @@
-# Flora, INET, OPAL en el mismo proyecto
+# Integración de OPAL en FloRa
 ## VERSIONES
 * **OMNET++ 5.6** ([Descargar](https://github.com/omnetpp/omnetpp/releases/download/omnetpp-5.6/omnetpp-5.6-src-linux.tgz))
 * **INET 3.6.8** ([Descargar](https://drive.google.com/file/d/1Y3piMtrX1nV4aT_69csTkULYM_kxUyQm/view?usp=sharing))
