@@ -3,6 +3,7 @@
 * **OMNET++ 5.6** ([Descargar](https://github.com/omnetpp/omnetpp/releases/download/omnetpp-5.6/omnetpp-5.6-src-linux.tgz))
 * **INET 3.6.8** ([Descargar](https://drive.google.com/file/d/1Y3piMtrX1nV4aT_69csTkULYM_kxUyQm/view?usp=sharing))
 * **FLORA 0.8**  ([Descargar](https://drive.google.com/file/d/19bO7VG52wIU02MZ07ztqdHwCintY4AEb/view?usp=sharing))
+* **OPAL** ([Descargar](https://gitlab.com/esteban.egea/opal))
 
 ## PATHS & SYMBOLS
 _Recuerda cambiar los PATHS a los de tu ordenador._
