@@ -55,6 +55,8 @@ Comprobación FreeSpaceLoss sin Meshes
 
 ![SINMESHES](https://i.imgur.com/G8so0zV.png)
 
+Se puede observar que la potencia recibida en el primer caso es mayor
+
 ## ¿CÓMO CONVERTIR ARCHIVOS MESH PARA QUE LOS LEA EL PROGRAMA CORRECTAMENTE? [Generar escenario](http://pcacribia.upct.es/veneris/tutorial)
 * Una vez generado el escenario en Unity (marcando las opciones de Opal), se pulsa sobre Opal > Save Static Meshes to Current Folder. Una vez hecho esto, se habrá creado una carpeta meshes en la raiz del proyecto de Unity. Esta carpeta contiene los meshes de todo el escenario así como otro archivo llamado "names.txt" que será el que leerá Omnet
 * Copiamos el archivo "convertir.sh" dentro de la carpeta meshes y lo ejecutamos. Esto sirve para quitar los espacios de los nombres de los archivos de forma automática. Una vez hecho esto Omnet ya leerá correctamente los meshes.
