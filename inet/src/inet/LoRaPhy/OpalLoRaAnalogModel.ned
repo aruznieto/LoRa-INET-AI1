@@ -21,6 +21,8 @@ package inet.LoRaPhy;
 module OpalLoRaAnalogModel extends LoRaAnalogModel
 {
         parameters:
+        @signal[LoRaReceivedPower](type=double); // Potencia recibida
+        @statistic[LoRaReceivedPower](source=LoRaReceivedPower; record=mean);
         @class(physicallayer::OpalLoRaAnalogModel);
         
 }

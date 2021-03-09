@@ -35,8 +35,11 @@ namespace physicallayer {
 
 class INET_API OpalLoRaAnalogModel : public LoRaAnalogModel
 {
+private:
+    simsignal_t LoRaReceivedPower;
 protected:
     virtual void initialize(int stage);
+    void finish() override;
     virtual W computeReceptionPower(const IRadio *radio, const ITransmission *transmission, const IArrival *arrival) const override;
     OpalLoRaRadioMedium *analogModel;
     virtual int numInitStages() const override { return NUM_INIT_STAGES; }

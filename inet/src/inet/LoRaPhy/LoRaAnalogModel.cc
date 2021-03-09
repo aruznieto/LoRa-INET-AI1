@@ -28,6 +28,17 @@ namespace physicallayer {
 
 Define_Module(LoRaAnalogModel);
 
+void LoRaAnalogModel::initialize(int stage)
+{
+    if (stage == INITSTAGE_LOCAL)
+        LoRaReceivedPower = registerSignal("LoRaReceivedPower");
+}
+
+void LoRaAnalogModel::finish()
+{
+        recordScalar("LoRaReceivedPower", LoRaReceivedPower);
+}
+
 std::ostream& LoRaAnalogModel::printToStream(std::ostream& stream, int level) const
 {
     return stream << "LoRaAnalogModel";
@@ -119,6 +130,7 @@ const IReception *LoRaAnalogModel::computeReception(const IRadio *receiverRadio,
     int LoRaSF = loRaTransmission->getLoRaSF();
     Hz LoRaBW = loRaTransmission->getLoRaBW();
     int LoRaCR = loRaTransmission->getLoRaCR();
+    const_cast<LoRaAnalogModel* >(this)->emit(LoRaReceivedPower, receivedPower.get());
     return new LoRaReception(receiverRadio, transmission, receptionStartTime, receptionEndTime, receptionStartPosition, receptionEndPosition, receptionStartOrientation, receptionEndOrientation, LoRaCF, LoRaBW, receivedPower, LoRaSF, LoRaCR);
 }
 

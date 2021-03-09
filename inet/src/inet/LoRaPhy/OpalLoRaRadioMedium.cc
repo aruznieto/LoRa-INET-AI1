@@ -187,13 +187,14 @@ namespace inet::physicallayer {
             inf<<path<<"/"<<n<<"-i.txt";
             tf<<path<<"/"<<n<<"-t.txt";
             emf<<path<<"/"<<n<<"-em.txt";
-            //std::cout<<path<<"/"<<n<<"-prueba.txt"<<endl;
+            std::cout<<path<<"/"<<n<<"-prueba.txt"<<endl;
             std::vector<optix::float3> v=loadVerticesFromFile(vf.str().c_str());
             std::vector<int> ind=loadTrianglesFromFile(inf.str().c_str());
             optix::Matrix4x4 tm=loadTransformFromFile(tf.str().c_str());
 
             //emProp1.dielectricConstant = optix::make_float2(3.75f, -60.0f*defaultChannel.waveLength*0.038f);
             MaterialEMProperties emProp1 =loadEMFromFile(emf.str().c_str());
+            std::cout<<n<<endl;
             addStaticMesh(static_cast<int>(v.size()), v.data(), static_cast<int>(ind.size()), ind.data(), tm, emProp1);
 
         }
