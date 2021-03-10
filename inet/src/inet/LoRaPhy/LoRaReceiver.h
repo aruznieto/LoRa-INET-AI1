@@ -58,6 +58,7 @@ private:
 
     W energyDetection;
     simsignal_t LoRaReceptionCollision;
+    static simsignal_t LoRaReceivedPower;
 
     int nonOrthDelta[6][6] = {
        {1, -8, -9, -9, -9, -9},

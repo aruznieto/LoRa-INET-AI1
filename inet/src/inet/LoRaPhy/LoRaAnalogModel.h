@@ -28,11 +28,7 @@ namespace physicallayer {
 
 class INET_API LoRaAnalogModel : public ScalarAnalogModelBase
 {
-  private:
-    simsignal_t LoRaReceivedPower;
   public:
-    void initialize(int stage) override;
-    void finish() override;
     const W getBackgroundNoisePower(const LoRaBandListening *listening) const;
     virtual std::ostream& printToStream(std::ostream& stream, int level) const override;
     virtual W computeReceptionPower(const IRadio *radio, const ITransmission *transmission, const IArrival *arrival) const override;

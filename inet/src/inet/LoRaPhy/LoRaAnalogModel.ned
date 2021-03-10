@@ -26,7 +26,5 @@ module LoRaAnalogModel like IAnalogModel
 {
     parameters:
         @display("i=block/tunnel");
-        @signal[LoRaReceivedPower](type=double); // Potencia recibida
-        @statistic[LoRaReceivedPower](source=LoRaReceivedPower; record=mean);
         @class(physicallayer::LoRaAnalogModel);
 }

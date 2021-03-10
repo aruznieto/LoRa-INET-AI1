@@ -22,17 +22,10 @@ namespace inet::physicallayer {
         {
             if (stage== INITSTAGE_LAST ) {
                 analogModel = check_and_cast<OpalLoRaRadioMedium *>(getParentModule());
-                LoRaReceivedPower = registerSignal("LoRaReceivedPower");
             }
         }
-
-void OpalLoRaAnalogModel::finish()
-{
-    recordScalar("LoRaReceivedPower", LoRaReceivedPower);
-}
     W OpalLoRaAnalogModel::computeReceptionPower(const IRadio *receiver, const ITransmission *transmission, const IArrival *arrival) const {
         W power = analogModel->opalComputeReception(receiver, transmission);
-        const_cast<OpalLoRaAnalogModel* >(this)->emit(LoRaReceivedPower, power.get());
         return power;
     }
 }
