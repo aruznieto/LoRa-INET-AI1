@@ -225,7 +225,8 @@ const IReceptionResult *LoRaReceiver::computeReceptionResult(const IListening *l
     auto transmission = reception->getTransmission();
     const LoRaReception *loRaReception = check_and_cast<const LoRaReception *>(reception);
     W power = loRaReception->getPower();
-    const_cast<LoRaReceiver* >(this)->emit(LoRaReceivedPower, power.get());
+    double powerdBW = 10 * log10(power.get());
+    const_cast<LoRaReceiver* >(this)->emit(LoRaReceivedPower, powerdBW);
     //W RSSI = loRaReception->computeMinPower(reception->getStartTime(part), reception->getEndTime(part));
     auto indication = computeReceptionIndication(snir);
     // TODO: add all cached decisions?

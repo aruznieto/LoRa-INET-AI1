@@ -4,8 +4,7 @@ import inet.applications.udpapp.UDPBasicApp;
 import inet.node.inet.Router;
 import inet.node.internetcloud.InternetCloud;
 
-//import inet.LoRaPhy.OpalLoRaRadioMedium;
-import inet.LoRaPhy.LoRaMedium;
+import inet.LoRaPhy.OpalLoRaRadioMedium;
 
 import inet.LoraNode.OpalLoRaNode;
 import inet.LoraNode.OpalLoRaGW;
@@ -14,7 +13,7 @@ import inet.networklayer.configurator.ipv4.IPv4NetworkConfigurator;
 import inet.node.ethernet.Eth1G;
 
 @license(LGPL);
-network Cartagena
+network CartagenaOPAL
 {
     parameters:
         int numberOfNodes = default(1);
@@ -31,7 +30,7 @@ network Cartagena
             @display("p=143,149;is=s");
             id = numberOfNodes+1+index;
         }
-        LoRaMedium: LoRaMedium {
+        OpalLoRaRadioMedium: OpalLoRaRadioMedium {
             @display("p=791,93");
         }
         networkServer: StandardHost {
