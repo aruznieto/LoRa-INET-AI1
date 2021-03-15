@@ -56,4 +56,4 @@ Comprobación FreeSpaceLoss sin Meshes
 
 ![SINMESHES](https://i.imgur.com/G8so0zV.png)
 
-Se puede observar que la potencia recibida en el primer caso es mayo
+Se puede observar que la potencia recibida en el primer caso es mayor
