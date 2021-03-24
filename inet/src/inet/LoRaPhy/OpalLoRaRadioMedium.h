@@ -80,6 +80,8 @@ namespace inet::physicallayer {
         int maxNumberOfReflections;
         bool loadFromFiles;
 
+        bool isStatic;
+
         std::map<const IRadio*, OpalReceiverCallback*> receiversRadios;
 
         //Pending transmissions
@@ -92,7 +94,10 @@ namespace inet::physicallayer {
         virtual void initialize(int stage);
         virtual int numInitStages() const override { return NUM_INIT_STAGES; }
 
+        typedef std::map<const IRadio*,float> CachedPowerEntry;
+        typedef std::map<const IRadio*, CachedPowerEntry*> CachedPowerMap;
 
+        CachedPowerMap mapReceptions;
 
         void transmitInOpal(const IRadio *radio, const ITransmission *transmission);
 

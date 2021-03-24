@@ -87,6 +87,7 @@ namespace inet::physicallayer {
     {
         LoRaMedium::initialize(stage);
         if (stage == INITSTAGE_LOCAL) {
+            isStatic = par("isStatic");
             //First, set the environment to read the CUDA program files from our custom directory.
             std::string pf(cudaDir);
             if (!pf.empty()) {
@@ -408,9 +409,39 @@ namespace inet::physicallayer {
         communicationCache->setCachedFrame(transmission, radioFrame);
 
 
-        transmitInOpal(radio,transmission);
+        if(isStatic){
+            auto tx = mapReceptions.find(transmission->getTransmitter());
+                if (tx!=mapReceptions.end()) {
+                    //std::cout << "transmitPacket() -> Transmitter " << receiversRadios.at(tx->first)->opalReceiverId << " already exist on the map. Searching CPE"<<endl;
+                    CachedPowerEntry* CPE = tx->second;
+                    int txOpalid = receiversRadios.at(tx->first)->opalReceiverId;
+                    for (auto rx = CPE->begin(); rx != CPE->end(); ++rx){
+                        if(rx->second != 0){
+                            OpalReceiverCallback* callback;
+                            try  {
+                                callback=receiversRadios.at(rx->first);
+                                callback->createReception(rx->second, txOpalid);
+                                //std::cout<<"transmitPacket() -> Reception created between "<< txOpalid << " and " << receiversRadios.at(rx->first)->opalReceiverId << " . Power: "<< rx->second <<endl;
 
+                            } catch (std::out_of_range &e) {
+                                std::stringstream s;
+                                s<<"sendToRadio():: radio "<<radio<<" is not registered with opal";
+                                throw cRuntimeError(s.str().c_str());
+                            }
+                        }
+                    }
+                }
+                else {
+                    //std::cout<<"transmitPacket() -> Transmitter " << transmission->getTransmitter()->getId() << " doesnt exist on CachedPowerMap "<< " . Executing transmitInOpal"<<endl;;
+                    CachedPowerEntry* CPE = new CachedPowerEntry();
+                    mapReceptions.insert(std::pair<const IRadio*, CachedPowerEntry*>(transmission->getTransmitter(), CPE));
+                    transmitInOpal(radio,transmission);
+                }
+        }
 
+        else{
+            transmitInOpal(radio,transmission);
+        }
 
         return radioFrame;
     }
@@ -591,6 +622,30 @@ namespace inet::physicallayer {
             }
         }
         W receptionPower(p);
+
+        if(isStatic){
+            auto tx = mapReceptions.find(transmission->getTransmitter());
+                if (tx != mapReceptions.end()) {
+                    // Transmitter exists inside map
+                    //ocb=receiversRadios.at(transmission->getTransmitter());
+                    //int idtx = ocb->opalReceiverId;
+                    //std::cout<<"opalComputeReception() -> Transmitter " << idtx << " already exist on the map. Searching CPE"<<endl;
+                    CachedPowerEntry* CPE = tx->second;
+                    auto rx = CPE->find(receiver);
+                    if (rx == CPE->end()) {
+                        //ocb=receiversRadios.at(receiver);
+                        //int idrx = ocb->opalReceiverId;
+                        //std::cout<<"opalComputeReception() -> Power between "<< idrx << " and " << idtx << " doesnt exist. Inserting power: "<< (float)receptionPower.get() <<endl;
+                        CPE->insert(std::pair<const IRadio*,float>(receiver, (float)receptionPower.get()));
+                    }
+                    else {
+                        //ocb=receiversRadios.at(receiver);
+                        //int idrx = ocb->opalReceiverId;
+                        //std::cout<<"opalComputeReception() -> Power between "<< idrx << " and " << idtx << " exists. Power: "<< (float)rx->second <<endl;
+                    }
+                }
+        }
+
         return receptionPower;
         //return new ScalarReception(receiver, transmission, receptionStartTime, receptionEndTime, receptionStartPosition, receptionEndPosition, receptionStartOrientation, receptionEndOrientation, narrowbandSignalAnalogModel->getCarrierFrequency(), narrowbandSignalAnalogModel->getBandwidth(), receptionPower);
 
