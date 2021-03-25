@@ -27,6 +27,7 @@ module OpalLoRaRadioMedium extends LoRaMedium
         int azimuthDelta = default(1);
         int elevationDelta = default(1);
         bool useDecimalDegreeDelta= default(false);
+        bool isStatic = default(false);
         double receptionRadius @unit(m) = default(1m);
         bool loadMeshesFromFile = default(false);
         string meshesPath = default("");

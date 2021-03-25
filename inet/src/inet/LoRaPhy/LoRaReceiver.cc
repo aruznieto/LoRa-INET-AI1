@@ -22,6 +22,8 @@ namespace physicallayer {
 
 Define_Module(LoRaReceiver);
 
+simsignal_t LoRaReceiver::LoRaReceivedPower = cComponent::registerSignal("LoRaReceivedPower");
+
 LoRaReceiver::LoRaReceiver() :
     snirThreshold(NaN)
 {
@@ -38,8 +40,10 @@ void LoRaReceiver::initialize(int stage)
         } else iAmGateway = false;
         alohaChannelModel = par("alohaChannelModel");
         LoRaReceptionCollision = registerSignal("LoRaReceptionCollision");
+        //LoRaReceivedPower = registerSignal("LoRaReceivedPower");
         numCollisions = 0;
         rcvBelowSensitivity = 0;
+
     }
 }
 
@@ -47,6 +51,7 @@ void LoRaReceiver::finish()
 {
         recordScalar("numCollisions", numCollisions);
         recordScalar("rcvBelowSensitivity", rcvBelowSensitivity);
+        recordScalar("LoRaReceivedPower", LoRaReceivedPower);
 
 }
 
@@ -218,7 +223,10 @@ const IReceptionResult *LoRaReceiver::computeReceptionResult(const IListening *l
     auto radio = reception->getReceiver();
     auto radioMedium = radio->getMedium();
     auto transmission = reception->getTransmission();
-    //const LoRaReception *loRaReception = check_and_cast<const LoRaReception *>(reception);
+    const LoRaReception *loRaReception = check_and_cast<const LoRaReception *>(reception);
+    W power = loRaReception->getPower();
+    double powerdBW = 10 * log10(power.get());
+    const_cast<LoRaReceiver* >(this)->emit(LoRaReceivedPower, powerdBW);
     //W RSSI = loRaReception->computeMinPower(reception->getStartTime(part), reception->getEndTime(part));
     auto indication = computeReceptionIndication(snir);
     // TODO: add all cached decisions?

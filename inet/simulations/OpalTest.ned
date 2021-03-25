@@ -21,11 +21,11 @@ network LoRaNetworkOpalTest
         @display("bgb=3000,3000");
     submodules:
         loRaNodes[numberOfNodes]: OpalLoRaNode {
-            @display("p=83.664,233.856");
+            @display("p=143,240");
             id = index;
         }
         loRaGW[numberOfGateways]: OpalLoRaGW {
-            @display("p=83.664,150.192;is=s");
+            @display("p=143,149;is=s");
             id = numberOfNodes+1+index;
         }
         OpalLoRaRadioMedium: OpalLoRaRadioMedium {

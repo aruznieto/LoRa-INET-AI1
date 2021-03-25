@@ -25,7 +25,7 @@ namespace inet::physicallayer {
             }
         }
     W OpalLoRaAnalogModel::computeReceptionPower(const IRadio *receiver, const ITransmission *transmission, const IArrival *arrival) const {
-
-        return analogModel->opalComputeReception(receiver, transmission);
+        W power = analogModel->opalComputeReception(receiver, transmission);
+        return power;
     }
 }
