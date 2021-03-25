@@ -75,12 +75,12 @@ typedef std::map<const IRadio*, CachedPowerEntry*> CachedPowerMap;
 CachedPowerMap mapReceptions;
 ```
 * .cc:
-	* stage == INITSTAGE_LOCAL
+- stage == INITSTAGE_LOCAL
 ```
 isStatic = par("isStatic");
 ```
 
-	* transmitPacket
+- transmitPacket
 ```
 
 if(isStatic){
@@ -117,7 +117,7 @@ else{
     transmitInOpal(radio,transmission);
 }
 ```
-** opalComputeReception
+- opalComputeReception
 ```
 if(isStatic){
     auto tx = mapReceptions.find(transmission->getTransmitter());
