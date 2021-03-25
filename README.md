@@ -67,7 +67,7 @@ bool isStatic = default(false);
 ```
 * .h:
 ```
- bool isStatic;
+bool isStatic;
 
 typedef std::map<const IRadio*,float> CachedPowerEntry;
 typedef std::map<const IRadio*, CachedPowerEntry*> CachedPowerMap;
@@ -75,12 +75,14 @@ typedef std::map<const IRadio*, CachedPowerEntry*> CachedPowerMap;
 CachedPowerMap mapReceptions;
 ```
 * .cc:
-** stage == INITSTAGE_LOCAL
+	* stage == INITSTAGE_LOCAL
 ```
 isStatic = par("isStatic");
 ```
-** transmitPacket
+
+	* transmitPacket
 ```
+
 if(isStatic){
     auto tx = mapReceptions.find(transmission->getTransmitter());
 	if (tx!=mapReceptions.end()) {
