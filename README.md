@@ -57,3 +57,86 @@ Comprobación FreeSpaceLoss sin Meshes
 ![SINMESHES](https://i.imgur.com/G8so0zV.png)
 
 Se puede observar que la potencia recibida en el primer caso es mayor
+
+## ACELERACIÓN PARA RAY-TRACING ESTÁTICO
+
+Se modifica OpalLoRaRadioMedium:
+* .ned:
+```
+bool isStatic = default(false);
+```
+* .h:
+```
+ bool isStatic;
+
+typedef std::map<const IRadio*,float> CachedPowerEntry;
+typedef std::map<const IRadio*, CachedPowerEntry*> CachedPowerMap;
+
+CachedPowerMap mapReceptions;
+```
+* .cc:
+** stage == INITSTAGE_LOCAL
+```
+isStatic = par("isStatic");
+```
+** transmitPacket
+```
+        if(isStatic){
+            auto tx = mapReceptions.find(transmission->getTransmitter());
+                if (tx!=mapReceptions.end()) {
+                    //std::cout << "transmitPacket() -> Transmitter " << receiversRadios.at(tx->first)->opalReceiverId << " already exist on the map. Searching CPE"<<endl;
+                    CachedPowerEntry* CPE = tx->second;
+                    int txOpalid = receiversRadios.at(tx->first)->opalReceiverId;
+                    for (auto rx = CPE->begin(); rx != CPE->end(); ++rx){
+                        if(rx->second != 0){
+                            OpalReceiverCallback* callback;
+                            try  {
+                                callback=receiversRadios.at(rx->first);
+                                callback->createReception(rx->second, txOpalid);
+                                //std::cout<<"transmitPacket() -> Reception created between "<< txOpalid << " and " << receiversRadios.at(rx->first)->opalReceiverId << " . Power: "<< rx->second <<endl;
+
+                            } catch (std::out_of_range &e) {
+                                std::stringstream s;
+                                s<<"sendToRadio():: radio "<<radio<<" is not registered with opal";
+                                throw cRuntimeError(s.str().c_str());
+                            }
+                        }
+                    }
+                }
+                else {
+                    //std::cout<<"transmitPacket() -> Transmitter " << transmission->getTransmitter()->getId() << " doesnt exist on CachedPowerMap "<< " . Executing transmitInOpal"<<endl;;
+                    CachedPowerEntry* CPE = new CachedPowerEntry();
+                    mapReceptions.insert(std::pair<const IRadio*, CachedPowerEntry*>(transmission->getTransmitter(), CPE));
+                    transmitInOpal(radio,transmission);
+                }
+        }
+
+        else{
+            transmitInOpal(radio,transmission);
+        }
+```
+** opalComputeReception
+```
+        if(isStatic){
+            auto tx = mapReceptions.find(transmission->getTransmitter());
+                if (tx != mapReceptions.end()) {
+                    // Transmitter exists inside map
+                    //ocb=receiversRadios.at(transmission->getTransmitter());
+                    //int idtx = ocb->opalReceiverId;
+                    //std::cout<<"opalComputeReception() -> Transmitter " << idtx << " already exist on the map. Searching CPE"<<endl;
+                    CachedPowerEntry* CPE = tx->second;
+                    auto rx = CPE->find(receiver);
+                    if (rx == CPE->end()) {
+                        //ocb=receiversRadios.at(receiver);
+                        //int idrx = ocb->opalReceiverId;
+                        //std::cout<<"opalComputeReception() -> Power between "<< idrx << " and " << idtx << " doesnt exist. Inserting power: "<< (float)receptionPower.get() <<endl;
+                        CPE->insert(std::pair<const IRadio*,float>(receiver, (float)receptionPower.get()));
+                    }
+                    else {
+                        //ocb=receiversRadios.at(receiver);
+                        //int idrx = ocb->opalReceiverId;
+                        //std::cout<<"opalComputeReception() -> Power between "<< idrx << " and " << idtx << " exists. Power: "<< (float)rx->second <<endl;
+                    }
+                }
+        }
+```
