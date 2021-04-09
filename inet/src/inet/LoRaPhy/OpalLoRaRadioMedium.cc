@@ -143,6 +143,10 @@ namespace inet::physicallayer {
             delete r.second;
         }
 
+        for (auto r : mapReceptions) {
+            delete r.second;
+        }
+
     }
 
     void OpalLoRaRadioMedium::loadMeshesFromFiles() {
@@ -421,7 +425,7 @@ namespace inet::physicallayer {
                             try  {
                                 callback=receiversRadios.at(rx->first);
                                 callback->createReception(rx->second, txOpalid);
-                                //std::cout<<"transmitPacket() -> Reception created between "<< txOpalid << " and " << receiversRadios.at(rx->first)->opalReceiverId << " . Power: "<< rx->second <<endl;
+                                std::cout<<"transmitPacket() -> Reception created between "<< txOpalid << " and " << receiversRadios.at(rx->first)->opalReceiverId << " . Power: "<< rx->second <<endl;
 
                             } catch (std::out_of_range &e) {
                                 std::stringstream s;

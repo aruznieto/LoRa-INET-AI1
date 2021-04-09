@@ -39,7 +39,7 @@ module OpalLoRaRadioMedium extends LoRaMedium
         backgroundNoise.typename = default("IsotropicScalarBackgroundNoise");
         propagation.typename = default("ConstantSpeedPropagation");
         pathLoss.typename = default("FreeSpacePathLoss"); //Not actually using path loss, propagation is computed by Opal, but we need to provide some module
-        backgroundNoise.power = default(-110dBm);
+        backgroundNoise.power = default(-96.616dBm);
         mediumLimitCache.carrierFrequency = default(5.9GHz);
         mediumLimitCache.minReceptionPower = default(-85dBm);
         mediumLimitCache.minInterferencePower = default(-110dBm);
