@@ -86,6 +86,7 @@ namespace inet::physicallayer {
     void OpalLoRaRadioMedium::initialize(int stage)
     {
         LoRaMedium::initialize(stage);
+
         if (stage == INITSTAGE_LOCAL) {
             isStatic = par("isStatic");
             //First, set the environment to read the CUDA program files from our custom directory.

@@ -74,6 +74,9 @@ private:
     long rcvBelowSensitivity;
 
 public:
+    mutable std::map<int, simsignal_t> signalMap;
+
+public:
   LoRaReceiver();
 
   void initialize(int stage) override;
@@ -102,7 +105,6 @@ public:
   virtual const IListeningDecision *computeListeningDecision(const IListening *listening, const IInterference *interference) const override;
 
   W getSensitivity(const LoRaReception *loRaReception) const;
-
   bool isPacketCollided(const IReception *reception, IRadioSignal::SignalPart part, const IInterference *interference) const;
 
   virtual void setLoRaTP(W newTP) { LoRaTP = newTP; };

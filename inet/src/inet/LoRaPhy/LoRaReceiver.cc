@@ -24,8 +24,10 @@ Define_Module(LoRaReceiver);
 
 simsignal_t LoRaReceiver::LoRaReceivedPower = cComponent::registerSignal("LoRaReceivedPower");
 
+
 LoRaReceiver::LoRaReceiver() :
     snirThreshold(NaN)
+
 {
 }
 
@@ -40,7 +42,7 @@ void LoRaReceiver::initialize(int stage)
         } else iAmGateway = false;
         alohaChannelModel = par("alohaChannelModel");
         LoRaReceptionCollision = registerSignal("LoRaReceptionCollision");
-        //LoRaReceivedPower = registerSignal("LoRaReceivedPower");
+        LoRaReceivedPower = registerSignal("LoRaReceivedPower");
         numCollisions = 0;
         rcvBelowSensitivity = 0;
 
@@ -51,7 +53,7 @@ void LoRaReceiver::finish()
 {
         recordScalar("numCollisions", numCollisions);
         recordScalar("rcvBelowSensitivity", rcvBelowSensitivity);
-        recordScalar("LoRaReceivedPower", LoRaReceivedPower);
+        //recordScalar("LoRaReceivedPower", LoRaReceivedPower);
 
 }
 
@@ -225,9 +227,28 @@ const IReceptionResult *LoRaReceiver::computeReceptionResult(const IListening *l
     auto transmission = reception->getTransmission();
     const LoRaReception *loRaReception = check_and_cast<const LoRaReception *>(reception);
     W power = loRaReception->getPower();
-    double powerdBW = 10 * log10(power.get());
-    const_cast<LoRaReceiver* >(this)->emit(LoRaReceivedPower, powerdBW);
-    //W RSSI = loRaReception->computeMinPower(reception->getStartTime(part), reception->getEndTime(part));
+    double powerdBm = 10 * log10(power.get()) + 30;
+    const_cast<LoRaReceiver* >(this)->emit(LoRaReceivedPower, powerdBm);
+    int IdRx = radio->getId();
+    int IdTx = transmission->getTransmitter()->getId();
+    int IdSignal = IdRx*10 + IdTx;
+
+    auto s = signalMap.find(IdSignal);
+    if(s != signalMap.end()) {
+        // Exist
+        const_cast<LoRaReceiver* >(this)->emit(s->second, powerdBm);
+    }
+    else {
+        // Doesnt exist
+        char signalName[32];
+        sprintf(signalName, "LoRaRP%dFrom%d", IdRx, IdTx);
+        simsignal_t signal = registerSignal(signalName);
+        cProperty *statisticTemplate = getProperties()->get("statisticTemplate", "LoRaRP");
+        getEnvir()->addResultRecorders(const_cast<LoRaReceiver* >(this), signal, signalName,  statisticTemplate);
+        signalMap.insert(std::pair<int, simsignal_t>(IdSignal, signal));
+        const_cast<LoRaReceiver* >(this)->emit(signal, powerdBm);
+    }
+
     auto indication = computeReceptionIndication(snir);
     // TODO: add all cached decisions?
     auto decisions = new std::vector<const IReceptionDecision *>();
