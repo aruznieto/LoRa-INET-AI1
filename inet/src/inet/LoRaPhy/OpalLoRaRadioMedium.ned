@@ -23,7 +23,7 @@ module OpalLoRaRadioMedium extends LoRaMedium
     parameters:
         @class(physicallayer::OpalLoRaRadioMedium);
         
-        double carrierFrequency @unit(Hz) = default(5.9GHz);
+        double carrierFrequency @unit(Hz) = default(868MHz);
         int azimuthDelta = default(1);
         int elevationDelta = default(1);
         bool useDecimalDegreeDelta= default(false);
@@ -40,7 +40,7 @@ module OpalLoRaRadioMedium extends LoRaMedium
         propagation.typename = default("ConstantSpeedPropagation");
         pathLoss.typename = default("FreeSpacePathLoss"); //Not actually using path loss, propagation is computed by Opal, but we need to provide some module
         backgroundNoise.power = default(-96.616dBm);
-        mediumLimitCache.carrierFrequency = default(5.9GHz);
+        mediumLimitCache.carrierFrequency = default(868MHz);
         mediumLimitCache.minReceptionPower = default(-85dBm);
         mediumLimitCache.minInterferencePower = default(-110dBm);
 }
