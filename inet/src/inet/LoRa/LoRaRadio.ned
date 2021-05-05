@@ -23,7 +23,7 @@ import inet.power.storage.IdealEpEnergyStorage;
 module LoRaRadio extends FlatRadioBase
 {
     parameters:
-        antennaType = default("IsotropicAntenna");
+        antennaType = default("CustomAntenna");
         transmitterType = default("LoRaTransmitter");
         receiverType = default("LoRaReceiver");
         @signal[droppedPacket](type=long);

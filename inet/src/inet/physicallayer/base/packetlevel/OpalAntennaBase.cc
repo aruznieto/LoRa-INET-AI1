@@ -16,9 +16,10 @@
 //
 
 #include "inet/physicallayer/base/packetlevel/OpalAntennaBase.h"
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+#include "inet/common/ModuleAccess.h"
+#include <functional>
+#include <fstream>
+#include <string>
 
 namespace inet {
 
@@ -35,39 +36,56 @@ void OpalAntennaBase::initialize(int stage)
     if (stage == INITSTAGE_LOCAL) {
         mobility = getModuleFromPar<IMobility>(par("mobilityModule"), getContainingNode(this));
         numAntennas = par("numAntennas");
-        std::cout << "Creando ganancias" << endl;
-        FILE *f;
-        char *line, *n;
-
-        f = fopen("gains/gainRX.txt", "r");
-
-        int j;
-        int i = 0;
-        while(!feof(f)){
-            j = 0;
-            fscanf(f, "%s", line);
-            n = strtok(line, "  ");
-            while(n != NULL){
-                gainRX[i][j] = pow(10,atof(n)/10);
-                j++;
-                n = strtok(NULL, "  ");
+        if (first){
+            std::ifstream infile("/home/anrunie/Documentos/GIRTEL/LoRa-INET-AI1/inet/src/inet/physicallayer/base/packetlevel/gains/gain11467-2.txt");
+            std::string line;
+            std::string delimiter = "  ";
+            size_t pos = 0;
+            std::string token;
+            double firstword = true;
+            while (std::getline(infile, line)) {
+                firstword = true;
+                pos = 0;
+                std::vector<double> v;
+                while ((pos = line.find(delimiter)) != std::string::npos) {
+                    token = line.substr(0, pos);
+                    if(!firstword) {
+                        double gain = pow(10,atof(token.c_str())/10);
+                        v.push_back(gain);
+                    }
+                    firstword = false;
+                    line.erase(0, pos + delimiter.length());
+                }
+                gainsRX.push_back(v);
             }
-            i++;
-        }
+            infile.close();
 
-        f = fopen("gains/gainTX.txt", "r");
-
-        i = 0;
-        while(!feof(f)){
-            j = 0;
-            fscanf(f, "%s", line);
-            n = strtok(line, "  ");
-            while(n != NULL){
-                gainTX[i][j] = pow(10,atof(n)/10);
-                j++;
-                n = strtok(NULL, "  ");
+            std::ifstream infile2("/home/anrunie/Documentos/GIRTEL/LoRa-INET-AI1/inet/src/inet/physicallayer/base/packetlevel/gains/gain17514-2.txt");
+            pos = 0;
+            firstword = true;
+            while (std::getline(infile2, line)) {
+                firstword = true;
+                pos = 0;
+                std::vector<double> v;
+                while ((pos = line.find(delimiter)) != std::string::npos) {
+                    token = line.substr(0, pos);
+                    if(!firstword) {
+                        double gain = pow(10,atof(token.c_str())/10);
+                        v.push_back(gain);
+                    }
+                    firstword = false;
+                    line.erase(0, pos + delimiter.length());
+                }
+                gainsTX.push_back(v);
             }
-            i++;
+            infile2.close();
+
+
+            first = false;
+
+            std::cout << "Matriz RX: Filas = " << gainsRX.size() << " Columnas = " << gainsRX[0].size() << endl;
+            std::cout << "Matriz TX: Filas = " << gainsTX.size() << " Columnas = " << gainsTX[0].size() << endl;
+            std::cout << gainsTX[45][20] << " " << gainsRX[5][65] << endl;
         }
 
     }

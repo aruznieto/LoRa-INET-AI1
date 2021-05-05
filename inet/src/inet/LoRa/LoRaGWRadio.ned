@@ -30,7 +30,7 @@ module LoRaGWRadio extends FlatRadioBase
         @signal[LoRaGWRadioReceptionFinishedCorrect](type=bool); // optional
         @statistic[LoRaGWRadioReceptionFinishedCorrect](source=LoRaGWRadioReceptionFinishedCorrect; record=count);
         
-        antennaType = default("IsotropicAntenna");
+        antennaType = default("CustomAntenna");
         transmitterType = default("LoRaTransmitter");
         receiverType = default("LoRaReceiver");
         

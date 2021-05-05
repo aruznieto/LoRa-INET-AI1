@@ -15,39 +15,29 @@
 // along with this program; if not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef __INET_OPALANTENNABASE_H
-#define __INET_OPALANTENNABASE_H
+#ifndef __INET_CUSTOMANTENNA_H
+#define __INET_CUSTOMANTENNA_H
 
-#include "inet/physicallayer/base/packetlevel/AntennaBase.h"
+#include "inet/physicallayer/base/packetlevel/OpalAntennaBase.h"
 
 namespace inet {
 
 namespace physicallayer {
 
-class INET_API OpalAntennaBase : public AntennaBase
+class INET_API CustomAntenna : public OpalAntennaBase
 {
-  protected:
-    IMobility *mobility;
-    int numAntennas;
-    bool first = true;
-
-  protected:
-    virtual void initialize(int stage) override;
 
   public:
-    OpalAntennaBase();
-
-    std::vector<std::vector<double>> gainsTX;
-    std::vector<std::vector<double>> gainsRX;
+    CustomAntenna();
 
     virtual std::ostream& printToStream(std::ostream& stream, int level) const override;
-    virtual IMobility *getMobility() const override { return mobility; }
-    virtual int getNumAntennas() const override { return numAntennas; }
+    virtual double getMaxGain() const override { return 1; }
+    virtual double computeGain(const EulerAngles direction) const override;
 };
 
 } // namespace physicallayer
 
 } // namespace inet
 
-#endif // ifndef __INET_ANTENNABASE_H
+#endif // ifndef __INET_CUSTOMANTENNA_H
 

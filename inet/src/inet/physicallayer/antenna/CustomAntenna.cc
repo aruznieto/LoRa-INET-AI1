@@ -15,39 +15,34 @@
 // along with this program; if not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef __INET_OPALANTENNABASE_H
-#define __INET_OPALANTENNABASE_H
-
-#include "inet/physicallayer/base/packetlevel/AntennaBase.h"
+#include "CustomAntenna.h"
 
 namespace inet {
 
 namespace physicallayer {
 
-class INET_API OpalAntennaBase : public AntennaBase
+Define_Module(CustomAntenna);
+
+CustomAntenna::CustomAntenna() :
+    OpalAntennaBase()
 {
-  protected:
-    IMobility *mobility;
-    int numAntennas;
-    bool first = true;
+}
 
-  protected:
-    virtual void initialize(int stage) override;
+std::ostream& CustomAntenna::printToStream(std::ostream& stream, int level) const
+{
+    stream << "CustomAntenna";
+    return OpalAntennaBase::printToStream(stream, level);
+}
 
-  public:
-    OpalAntennaBase();
+double CustomAntenna::computeGain(EulerAngles direction) const
+{
+    //std::cout << "Coordenadas: Alpha - " << direction.alpha << " Beta - " << direction.beta << " Gamma - " << direction.gamma << endl;
+    //return OpalAntennaBase::gainRX[(int)direction.alpha][(int)direction.beta];
+    return OpalAntennaBase::gainsRX[0][0];
 
-    std::vector<std::vector<double>> gainsTX;
-    std::vector<std::vector<double>> gainsRX;
-
-    virtual std::ostream& printToStream(std::ostream& stream, int level) const override;
-    virtual IMobility *getMobility() const override { return mobility; }
-    virtual int getNumAntennas() const override { return numAntennas; }
-};
+}
 
 } // namespace physicallayer
 
 } // namespace inet
-
-#endif // ifndef __INET_ANTENNABASE_H
 
