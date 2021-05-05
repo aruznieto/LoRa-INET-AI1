@@ -49,15 +49,17 @@ std::ostream& LoRaLogNormalShadowing::printToStream(std::ostream& stream, int le
 double LoRaLogNormalShadowing::computePathLoss(mps propagationSpeed, Hz frequency, m distance) const
 {
     // parameters taken from paper "Do LoRa Low-Power Wide-Area Networks Scale?"
-    double PL_d0_db = 127.41;
-    double PL_db = PL_d0_db + 10 * gamma * log10(unit(distance / d0).get()) + normal(0.0, sigma);
+    //double PL_d0_db = 127.41;
+    double PL_d0_db = 60.8;
+    double PL_db = PL_d0_db + 10 * gamma * log10(unit(distance / d0).get()) + normal(8.5, sigma);
     return math::dB2fraction(-PL_db);
 }
 
 m LoRaLogNormalShadowing::computeRange(W transmissionPower) const
 {
     // parameters taken from paper "Do LoRa Low-Power Wide-Area Networks Scale?"
-    double PL_d0_db = 127.41;
+    //double PL_d0_db = 127.41;
+    double PL_d0_db = 60.8;
     double max_sensitivity = -137;
     double trans_power_db = round(10 * log10(transmissionPower.get()*1000));
     EV << "LoRaLogNormalShadowing transmissionPower in W = " << transmissionPower << " in dBm = " << trans_power_db << endl;

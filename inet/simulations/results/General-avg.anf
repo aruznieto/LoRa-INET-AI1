@@ -3,10 +3,6 @@
   <inputs>
     <inputs name="/inet/simulations/results/General-avg-*.vec"/>
     <inputs name="/inet/simulations/results/General-avg-*.sca"/>
-    <inputs name="/inet/simulations/results/General-avg,pathlosstype=HataOkumura-#0.sca"/>
-    <inputs name="/inet/simulations/results/General-avg,pathlosstype=HataOkumura-#0.vec"/>
-    <inputs name="/inet/simulations/results/General-avg,pathlosstype=LoRaLogNormalShadowing-#0.sca"/>
-    <inputs name="/inet/simulations/results/General-avg,pathlosstype=LoRaLogNormalShadowing-#0.vec"/>
   </inputs>
   <datasets/>
   <chartSheets/>
