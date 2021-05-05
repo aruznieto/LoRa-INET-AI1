@@ -15,7 +15,7 @@
 // along with this program; if not, see <http://www.gnu.org/licenses/>.
 //
 
-#include "inet/physicallayer/base/packetlevel/OpalAntennaBase.h"
+#include "OpalAntennaBase.h"
 #include "inet/common/ModuleAccess.h"
 #include <functional>
 #include <fstream>
@@ -25,19 +25,14 @@ namespace inet {
 
 namespace physicallayer {
 
-OpalAntennaBase::OpalAntennaBase() :
-    mobility(nullptr),
-    numAntennas(-1)
-{
-}
-
 void OpalAntennaBase::initialize(int stage)
 {
+
+    AntennaBase::initialize(stage);
+
     if (stage == INITSTAGE_LOCAL) {
-        mobility = getModuleFromPar<IMobility>(par("mobilityModule"), getContainingNode(this));
-        numAntennas = par("numAntennas");
         if (first){
-            std::ifstream infile("/home/anrunie/Documentos/GIRTEL/LoRa-INET-AI1/inet/src/inet/physicallayer/base/packetlevel/gains/gain11467-2.txt");
+            std::ifstream infile(par("gainPathRX"));
             std::string line;
             std::string delimiter = "  ";
             size_t pos = 0;
@@ -60,7 +55,7 @@ void OpalAntennaBase::initialize(int stage)
             }
             infile.close();
 
-            std::ifstream infile2("/home/anrunie/Documentos/GIRTEL/LoRa-INET-AI1/inet/src/inet/physicallayer/base/packetlevel/gains/gain17514-2.txt");
+            std::ifstream infile2(par("gainPathTX"));
             pos = 0;
             firstword = true;
             while (std::getline(infile2, line)) {
@@ -89,11 +84,6 @@ void OpalAntennaBase::initialize(int stage)
         }
 
     }
-}
-
-std::ostream& OpalAntennaBase::printToStream(std::ostream& stream, int level) const
-{
-    return stream;
 }
 
 } // namespace physicallayer

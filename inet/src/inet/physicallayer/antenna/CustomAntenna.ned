@@ -25,8 +25,4 @@ import inet.physicallayer.base.packetlevel.OpalAntennaBase;
 //
 module CustomAntenna extends OpalAntennaBase
 {
-    parameters:
-        string gainPathRX = default("");
-        string gainPathTX = default("");
-        @class(CustomAntenna);
 }

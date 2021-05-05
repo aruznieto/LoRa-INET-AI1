@@ -18,7 +18,7 @@
 #ifndef __INET_OPALANTENNABASE_H
 #define __INET_OPALANTENNABASE_H
 
-#include "inet/physicallayer/base/packetlevel/AntennaBase.h"
+#include "AntennaBase.h"
 
 namespace inet {
 
@@ -27,22 +27,16 @@ namespace physicallayer {
 class INET_API OpalAntennaBase : public AntennaBase
 {
   protected:
-    IMobility *mobility;
-    int numAntennas;
     bool first = true;
 
   protected:
-    virtual void initialize(int stage) override;
+    virtual void initialize(int stage);
 
   public:
-    OpalAntennaBase();
 
     std::vector<std::vector<double>> gainsTX;
     std::vector<std::vector<double>> gainsRX;
 
-    virtual std::ostream& printToStream(std::ostream& stream, int level) const override;
-    virtual IMobility *getMobility() const override { return mobility; }
-    virtual int getNumAntennas() const override { return numAntennas; }
 };
 
 } // namespace physicallayer
