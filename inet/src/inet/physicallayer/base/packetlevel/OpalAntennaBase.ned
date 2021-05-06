@@ -23,6 +23,5 @@ package inet.physicallayer.base.packetlevel;
 module OpalAntennaBase  extends AntennaBase
 {
 	parameters:
-	    string gainPathRX = default("");
-        string gainPathTX = default("");
+	    string gainPath = default("");
 }

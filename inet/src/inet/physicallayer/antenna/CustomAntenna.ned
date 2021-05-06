@@ -25,4 +25,6 @@ import inet.physicallayer.base.packetlevel.OpalAntennaBase;
 //
 module CustomAntenna extends OpalAntennaBase
 {
+    parameters:
+    	@class(CustomAntenna);
 }

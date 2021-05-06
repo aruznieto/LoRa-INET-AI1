@@ -31,57 +31,35 @@ void OpalAntennaBase::initialize(int stage)
     AntennaBase::initialize(stage);
 
     if (stage == INITSTAGE_LOCAL) {
-        if (first){
-            std::ifstream infile(par("gainPathRX"));
-            std::string line;
-            std::string delimiter = "  ";
-            size_t pos = 0;
-            std::string token;
-            double firstword = true;
-            while (std::getline(infile, line)) {
-                firstword = true;
-                pos = 0;
-                std::vector<double> v;
-                while ((pos = line.find(delimiter)) != std::string::npos) {
-                    token = line.substr(0, pos);
-                    if(!firstword) {
-                        double gain = pow(10,atof(token.c_str())/10);
-                        v.push_back(gain);
-                    }
-                    firstword = false;
-                    line.erase(0, pos + delimiter.length());
-                }
-                gainsRX.push_back(v);
-            }
-            infile.close();
-
-            std::ifstream infile2(par("gainPathTX"));
-            pos = 0;
+        std::string path = par("gainPath");
+        if(path == "") throw "You must set a path to the gain of antennas";
+        std::ifstream infile(path);
+        std::string line;
+        std::string delimiter = "  ";
+        size_t pos = 0;
+        std::string token;
+        double firstword = true;
+        while (std::getline(infile, line)) {
             firstword = true;
-            while (std::getline(infile2, line)) {
-                firstword = true;
-                pos = 0;
-                std::vector<double> v;
-                while ((pos = line.find(delimiter)) != std::string::npos) {
-                    token = line.substr(0, pos);
-                    if(!firstword) {
-                        double gain = pow(10,atof(token.c_str())/10);
-                        v.push_back(gain);
-                    }
-                    firstword = false;
-                    line.erase(0, pos + delimiter.length());
+            pos = 0;
+            std::vector<double> v;
+            while ((pos = line.find(delimiter)) != std::string::npos) {
+                token = line.substr(0, pos);
+                if(!firstword) {
+                    double gain = pow(10,atof(token.c_str())/10);
+                    v.push_back(gain);
                 }
-                gainsTX.push_back(v);
+                firstword = false;
+                line.erase(0, pos + delimiter.length());
             }
-            infile2.close();
-
-
-            first = false;
-
-            std::cout << "Matriz RX: Filas = " << gainsRX.size() << " Columnas = " << gainsRX[0].size() << endl;
-            std::cout << "Matriz TX: Filas = " << gainsTX.size() << " Columnas = " << gainsTX[0].size() << endl;
-            std::cout << gainsTX[45][20] << " " << gainsRX[5][65] << endl;
+            gainsAntenna.push_back(v);
         }
+
+        infile.close();
+
+        //std::cout << "Matriz: Filas = " << gains.size() << " Columnas = " << gains[0].size() << endl;
+        //std::cout << "Matriz TX: Filas = " << gainsTX.size() << " Columnas = " << gainsTX[0].size() << endl;
+        //std::cout << gainsAntenna[5][65] << endl;
 
     }
 }

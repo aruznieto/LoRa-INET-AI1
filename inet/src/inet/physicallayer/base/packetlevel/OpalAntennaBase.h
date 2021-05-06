@@ -27,15 +27,13 @@ namespace physicallayer {
 class INET_API OpalAntennaBase : public AntennaBase
 {
   protected:
-    bool first = true;
 
   protected:
     virtual void initialize(int stage);
 
   public:
 
-    std::vector<std::vector<double>> gainsTX;
-    std::vector<std::vector<double>> gainsRX;
+    std::vector<std::vector<double>> gainsAntenna;
 
 };
 
