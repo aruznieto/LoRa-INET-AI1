@@ -36,8 +36,9 @@ std::ostream& CustomAntenna::printToStream(std::ostream& stream, int level) cons
 
 double CustomAntenna::computeGain(EulerAngles direction) const
 {
-    std::cout << "COMPUTE GAIN: Alpha = " << direction.alpha << " | Beta = " << direction.beta << endl;
-    return OpalAntennaBase::gainsAntenna[180][90];
+    const int b = (int)(57.2957795131 * direction.beta);
+    std::cout << "POWER = " << gainsAntenna[180][b] << " | ANGLE = " << b << endl;
+    return OpalAntennaBase::gainsAntenna[180][b];
 
 }
 

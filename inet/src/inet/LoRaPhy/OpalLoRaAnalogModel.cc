@@ -25,7 +25,37 @@ namespace inet::physicallayer {
             }
         }
     W OpalLoRaAnalogModel::computeReceptionPower(const IRadio *receiver, const ITransmission *transmission, const IArrival *arrival) const {
+        const IAntenna *receiverAntenna = receiver->getAntenna();
+        const IAntenna *transmitterAntenna = transmission->getTransmitter()->getAntenna();
+
+        const Coord tSP = transmission->getStartPosition();
+        const Coord aSP = arrival->getStartPosition();
+
+        const Coord a = Coord(0,1,0); //Antenna Orientation
+
+        const Coord dir = tSP - aSP;
+
+        const double mA = sqrt(pow(a.x, 2) + pow(a.y, 2) + pow(a.z, 2));
+        //const double mtSP = sqrt(pow(tSP.x, 2) + pow(tSP.y, 2) + pow(tSP.z, 2));
+        //const double maSP =  sqrt(pow(aSP.x, 2) + pow(aSP.y, 2) + pow(aSP.z, 2));
+        const double mdir = sqrt(pow(dir.x, 2) + pow(dir.y, 2) + pow(dir.z, 2));
+
+        const Coord aNorm = a / mA;
+        //const Coord tSPNorm = tSP / mtSP;
+        //const Coord aSPNorm = aSP / maSP;
+        const Coord dirNorm = dir / mdir;
+
+        const float theta = dirNorm * aNorm;
+        const float phi = -(dirNorm * aNorm);
+
+        const EulerAngles transmissionAntennaDirection = EulerAngles(0,acos(phi),0);
+        const EulerAngles receptionAntennaDirection = EulerAngles(0,acos(theta),0);
+
+        double transmitterAntennaGain = transmitterAntenna->computeGain(transmissionAntennaDirection);
+        double receiverAntennaGain = receiverAntenna->computeGain(receptionAntennaDirection);
+
         W power = analogModel->opalComputeReception(receiver, transmission);
-        return power;
+
+        return power * std::min(1.0, transmitterAntennaGain * receiverAntennaGain);
     }
 }

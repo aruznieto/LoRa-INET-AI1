@@ -95,10 +95,52 @@ W LoRaAnalogModel::computeReceptionPower(const IRadio *receiverRadio, const ITra
     const Coord receptionStartPosition = arrival->getStartPosition();
     const Coord receptionEndPosition = arrival->getEndPosition();
     const EulerAngles transmissionDirection = computeTransmissionDirection(transmission, arrival);
-    const EulerAngles transmissionAntennaDirection = transmission->getStartOrientation() - transmissionDirection;
-    const EulerAngles receptionAntennaDirection = transmissionDirection - arrival->getStartOrientation();
+    EulerAngles transmissionAntennaDirection = transmission->getStartOrientation() - transmissionDirection;
+    EulerAngles receptionAntennaDirection = transmissionDirection - arrival->getStartOrientation();
+
+    const Coord tSP = transmission->getStartPosition();
+    const Coord aSP = arrival->getStartPosition();
+
+    const Coord a = Coord(0,1,0); //Antenna Orientation
+
+    const Coord dir = tSP - aSP;
+
+    const double mA = sqrt(pow(a.x, 2) + pow(a.y, 2) + pow(a.z, 2));
+    //const double mtSP = sqrt(pow(tSP.x, 2) + pow(tSP.y, 2) + pow(tSP.z, 2));
+    //const double maSP =  sqrt(pow(aSP.x, 2) + pow(aSP.y, 2) + pow(aSP.z, 2));
+    const double mdir = sqrt(pow(dir.x, 2) + pow(dir.y, 2) + pow(dir.z, 2));
+
+    const Coord aNorm = a / mA;
+    //const Coord tSPNorm = tSP / mtSP;
+    //const Coord aSPNorm = aSP / maSP;
+    const Coord dirNorm = dir / mdir;
+
+    const float theta = dirNorm * aNorm;
+    const float phi = -(dirNorm * aNorm);
+
+    transmissionAntennaDirection = EulerAngles(0,acos(phi) - 1.57079632679,0);
+    receptionAntennaDirection = EulerAngles(0,acos(theta),0);
+
     double transmitterAntennaGain = transmitterAntenna->computeGain(transmissionAntennaDirection);
     double receiverAntennaGain = receiverAntenna->computeGain(receptionAntennaDirection);
+
+    //const EulerAngles TXsO = transmission->getStartOrientation();
+    //const EulerAngles RXsO = arrival->getStartOrientation();
+
+
+    std::cout << "TX COORDS: X = " << tSP.x << " | Y = " << tSP.y << " | Z = " << tSP.z << endl;
+    std::cout << "RX COORDS: X = " << aSP.x << " | Y = " << aSP.y << " | Z = " << aSP.z << endl;
+    //std::cout << "DIR COORDS: X = " << dir.x << " | Y = " << dir.y << " | Z = " << dir.z << endl;
+    //std::cout << "THETA = " << acos(theta) << endl;
+    //std::cout << "PHI = " << acos(phi) << endl;
+    //std::cout << "TX COORDS NORM: X = " << tSPNorm.x << " | Y = " << tSPNorm.y << " | Z = " << tSPNorm.z << endl;
+    //std::cout << "RX COORDS NORM: X = " << aSPNorm.x << " | Y = " << aSPNorm.y << " | Z = " << aSPNorm.z << endl;
+    //std::cout << "DIR COORDS NORM: X = " << dirNorm.x << " | Y = " << dirNorm.y << " | Z = " << dirNorm.z << endl;
+    //std::cout << "START TX OR: Alpha = " << TXsO.alpha << " | Beta = " << TXsO.beta <<  " | Gamma = " << TXsO.gamma << endl;
+    //std::cout << "START RX OR: Alpha = " << RXsO.alpha << " | Beta = " << RXsO.beta <<  " | Gamma = " << RXsO.gamma << endl;
+    //std::cout << "TX AD: Alpha = " << transmissionAntennaDirection.alpha << " | Beta = " << transmissionAntennaDirection.beta << endl;
+    //std::cout << "RX AD: Alpha = " << receptionAntennaDirection.alpha << " | Beta = " << receptionAntennaDirection.beta << endl;
+
     double pathLoss = radioMedium->getPathLoss()->computePathLoss(transmission, arrival);
     double obstacleLoss = radioMedium->getObstacleLoss() ? radioMedium->getObstacleLoss()->computeObstacleLoss(narrowbandSignalAnalogModel->getCarrierFrequency(), transmission->getStartPosition(), receptionStartPosition) : 1;
     W transmissionPower = scalarSignalAnalogModel->getPower();
