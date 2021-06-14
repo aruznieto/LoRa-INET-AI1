@@ -128,8 +128,8 @@ W LoRaAnalogModel::computeReceptionPower(const IRadio *receiverRadio, const ITra
     //const EulerAngles RXsO = arrival->getStartOrientation();
 
 
-    std::cout << "TX COORDS: X = " << tSP.x << " | Y = " << tSP.y << " | Z = " << tSP.z << endl;
-    std::cout << "RX COORDS: X = " << aSP.x << " | Y = " << aSP.y << " | Z = " << aSP.z << endl;
+    //std::cout << "TX COORDS: X = " << tSP.x << " | Y = " << tSP.y << " | Z = " << tSP.z << endl;
+    //std::cout << "RX COORDS: X = " << aSP.x << " | Y = " << aSP.y << " | Z = " << aSP.z << endl;
     //std::cout << "DIR COORDS: X = " << dir.x << " | Y = " << dir.y << " | Z = " << dir.z << endl;
     //std::cout << "THETA = " << acos(theta) << endl;
     //std::cout << "PHI = " << acos(phi) << endl;
